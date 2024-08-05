@@ -1,5 +1,14 @@
-{
-  "name": "Using fixtures to represent data",
-  "email": "hello@cypress.io",
-  "body": "Fixtures are a great way to mock data for responses to routes"
-}
+{ "urls": [
+  {
+      "id": 1,
+      "long_url": "https://images.unsplash.com/photo-1531898418865-480b7090470f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=934&q=80",
+      "short_url": "http://localhost:3001/useshorturl/1",
+      "title": "Awesome photo"
+  },
+  {
+      "title": "Turing",
+      "long_url": "http://www.turing.edu",
+      "id": 2,
+      "short_url": "http://localhost:3001/useshorturl/2"
+  }
+]}
