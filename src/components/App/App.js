@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { getUrls, postUrls} from '../../apiCalls';
+import { getUrls, postUrls, deleteUrls} from '../../apiCalls';
 import UrlContainer from '../UrlContainer/UrlContainer';
 import UrlForm from '../UrlForm/UrlForm';
 
@@ -13,7 +13,6 @@ function App () {
       setUrls([...data.urls])
     })
     .catch(error => {
-      console.log(error)
       setError(error.message)})
   },[])
   function addURL(newUrl) {
@@ -27,6 +26,22 @@ function App () {
     })
     .catch(error => setError(error.message))
   }
+  function deleteUrl(id) {
+    deleteUrls(id)
+    .then(resp => {
+      if (resp.ok) {
+        return resp
+      }
+    })
+    .then(() => {
+        const currentUrls = urls.slice()
+        const filteredUrls = currentUrls.filter(url => url.id !== id)
+        setUrls(filteredUrls)
+    })
+    .catch(error => {
+      setError(error.message)
+    })
+  }
   return (
     <main className="App">
       <header>
@@ -34,7 +49,7 @@ function App () {
         <UrlForm addURL={addURL}/>
       </header>
       {error && <h2>{error}</h2>}
-      <UrlContainer urls={urls}/>
+      <UrlContainer urls={urls} deleteUrl={deleteUrl}/>
     </main>
   );
 }

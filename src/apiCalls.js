@@ -22,3 +22,9 @@ export const postUrls = (url) => {
     return response.json()
   })
 }
+
+export const deleteUrls = (url_id) => {
+  return fetch(`http://localhost:3001/api/v1/urls/${url_id}`, {
+    method: 'DELETE'
+  })
+}

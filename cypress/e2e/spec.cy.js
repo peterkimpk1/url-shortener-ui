@@ -12,7 +12,7 @@ describe('empty spec', () => {
     cy.get('h1').should('contain.text', 'URL Shortener')
     cy.get('[placeholder="Title..."]').should('exist')
     cy.get('[placeholder="URL to Shorten..."]').should('exist')
-    cy.get('button').should('exist')
+    cy.get('form > button').should('exist')
     cy.get('form').should('exist')
     cy.get('section .url').should('have.length',2)
   })
@@ -33,13 +33,13 @@ describe('empty spec', () => {
         fixture:'postURL.json'
       })
     })
-    cy.get('button').click()
+    cy.get('form > button').click()
     cy.get('section .url').last().should('exist')
   })
   it('should display a fill out all fields message if title or url is empty. Also should not make a POST request on error', () => {
 
     cy.get('[placeholder="Title..."]').type('test')
-    cy.get('button').click()
+    cy.get('form > button').click()
     cy.get('.form-error').should('contain.text','Please fill out all input fields')
     cy.get('section .url').should('have.length',2)
   })
@@ -55,7 +55,7 @@ describe('empty spec', () => {
   it('should be able to submit after an error message and unshow the error message', () => {
     cy.wait('@getURLs')
     cy.get('[placeholder="Title..."]').type('title')
-    cy.get('button').click()
+    cy.get('form > button').click()
     cy.get('.form-error').should('contain.text','Please fill out all input fields')
     cy.get('[placeholder="URL to Shorten..."]').type('http://www.google.com')
     cy.fixture('postURL').then((json) => {
@@ -64,8 +64,16 @@ describe('empty spec', () => {
         fixture:'postURL.json'
       })
     })
-    cy.get('button').click()
+    cy.get('form > button').click()
     cy.get('.form-error').should('not.exist')
+  })
+  it('should be able to delete a url', () => {
+    cy.intercept('http://localhost:3001/api/v1/urls/2', {
+      method: 'DELETE',
+      fixture:'deleteURL'
+    })
+    cy.get('.url-wrapper > :nth-child(2) > button').click()
+    cy.get('section .url').should('have.length',1)
   })
 })
 
