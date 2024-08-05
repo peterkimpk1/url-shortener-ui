@@ -12,7 +12,9 @@ function App () {
     .then(data => {
       setUrls([...data.urls])
     })
-    .catch(error => setError(error.message))
+    .catch(error => {
+      console.log(error)
+      setError(error.message)})
   },[])
   function addURL(newUrl) {
     const {title, urlToShorten} = newUrl
@@ -21,7 +23,6 @@ function App () {
       long_url: urlToShorten
     })
     .then(data => {
-      console.log(data)
       setUrls([...urls,data])
     })
     .catch(error => setError(error.message))
@@ -32,7 +33,7 @@ function App () {
         <h1>URL Shortener</h1>
         <UrlForm addURL={addURL}/>
       </header>
-      {!error && <h2>{error}</h2>}
+      {error && <h2>{error}</h2>}
       <UrlContainer urls={urls}/>
     </main>
   );

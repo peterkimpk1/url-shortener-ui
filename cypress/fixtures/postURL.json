@@ -1,6 +1,6 @@
 {
     "title":"exist",
-    "short_url":"http://www.google.com",
-    "long_url":"http://localhost:3001/useshorturl/3",
+    "short_url":"http://localhost:3001/useshorturl/3",
+    "long_url":"http://www.google.com",
     "id": 3
 }
